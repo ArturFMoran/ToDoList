@@ -19,7 +19,14 @@ struct ListView: View {
         List {
             ForEach(items, id: \.self) { item in
                 ListRowView(title: item)
+                    .onTapGesture {
+                        withAnimation {
+                            
+                        }
+                    }
             }
+            .onDelete(perform: deletItem)
+            .onMove(perform: moveItem)
         }
         .listStyle(.plain)
         .navigationTitle("ToDo List📝")
@@ -32,6 +39,14 @@ struct ListView: View {
 
             }
         }
+    }
+    
+    func deletItem(indexSet: IndexSet) {
+        items.remove(atOffsets: indexSet)
+    }
+    
+    func moveItem(from: IndexSet, to: Int) {
+        items.move(fromOffsets: from, toOffset: to)
     }
 }
 
